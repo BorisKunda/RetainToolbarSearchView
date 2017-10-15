@@ -7,6 +7,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,11 +19,14 @@ public class MainActivity extends AppCompatActivity {
     public static final String SEARCH_QUERY_TAG = "SEARCH_QUERY_TAG";
     private String mSearchQuery;
     private Handler mHandler;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textView = (TextView) findViewById(R.id.textView);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newQuery) {
                 mSearchQuery = newQuery;
+                if(mSearchQuery != null) textView.setText(mSearchQuery);
                 return false;
             }
         });
