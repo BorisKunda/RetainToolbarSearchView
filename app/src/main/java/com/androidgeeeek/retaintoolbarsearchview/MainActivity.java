@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newQuery) {
                 mSearchQuery = newQuery;
                 if(mSearchQuery != null) textView.setText(mSearchQuery);
+                Log.d("FEO", "onQueryTextChange : " + mSearchQuery);
                 return false;
             }
         });
@@ -88,15 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onPrepareOptionsMenu(menu);
     }
-
-
-    @Override
-    public void invalidateOptionsMenu() {
-        // detach all listeners from toolbar to avoid callbacks
-        if(mActionSearchView != null) mActionSearchView.setOnQueryTextListener(null);
-        super.invalidateOptionsMenu();
-    }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
