@@ -5,20 +5,17 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // set up toolbar
-    // https://developer.android.com/training/appbar/setting-up.html
-
+    public static final String SEARCH_QUERY_TAG = "SEARCH_QUERY_TAG";
     private MenuItem mActionSearchMenuItem;
     private SearchView mActionSearchView;
-    public static final String SEARCH_QUERY_TAG = "SEARCH_QUERY_TAG";
     private String mSearchQuery;
+
     private Handler mHandler;
     private TextView textView;
 
@@ -28,15 +25,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = (TextView) findViewById(R.id.textView);
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        if(savedInstanceState != null) {
-            mSearchQuery = savedInstanceState.getString(SEARCH_QUERY_TAG);
-        }
-
         mHandler = new Handler();
+
+        if(savedInstanceState != null)
+            mSearchQuery = savedInstanceState.getString(SEARCH_QUERY_TAG);
+
     }
 
     @Override
@@ -47,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mActionSearchMenuItem = menu.findItem(R.id.action_search);
         mActionSearchView = (SearchView) mActionSearchMenuItem.getActionView();
 
-        mActionSearchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        mActionSearchView.setIconifiedByDefault(false);
         mActionSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -58,13 +54,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newQuery) {
                 mSearchQuery = newQuery;
                 if(mSearchQuery != null) textView.setText(mSearchQuery);
-                Log.d("FEO", "onQueryTextChange : " + mSearchQuery);
                 return false;
             }
         });
-
-        mActionSearchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_ALWAYS);
-        mActionSearchMenuItem.setActionView(mActionSearchView);
 
         return true;
     }

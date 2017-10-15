@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RetainToolbarSearchView</string>
+    <string name="search_icon">Search</string>
 </resources>
